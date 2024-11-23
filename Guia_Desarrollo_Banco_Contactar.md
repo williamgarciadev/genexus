@@ -1,9 +1,15 @@
-# Sincrum - Guia de estilo para el desarrollo en GeneXus
-por [Daniel Monza](https://uy.linkedin.com/in/daniel-monza-62515112)
+# Guía de Estilo para el Desarrollo en GeneXus  
+**Banco Contactar**
 
-[![Licencia Creative Commons](https://i.creativecommons.org/l/by-sa/4.0/80x15.png)](http://creativecommons.org/licenses/by-sa/4.0/)
+Esta guía ha sido adaptada y personalizada para los desarrolladores del Banco Contactar con el objetivo de estandarizar las mejores prácticas en el desarrollo con GeneXus. Su propósito es proporcionar lineamientos claros y consistentes que faciliten la colaboración en equipo, la mantenibilidad del código y la calidad de las aplicaciones desarrolladas.
 
-Por correcciones o mejoras, pueden utilizar los [issues de github](https://github.com/sincrum/genexus/issues) o enviarlas por email a [info@sincrum.com](mailto:info@sincrum.com).
+En este documento, encontrarás recomendaciones prácticas sobre nomenclatura, estructuras de datos, formatos de código y otras buenas prácticas específicas para GeneXus. También se han incorporado estándares propios de la organización que aseguran la alineación con nuestros valores y objetivos.
+
+## ¿Por qué una guía de estilo?
+
+Un desarrollo estandarizado no solo mejora la productividad del equipo, sino que también asegura que nuestro software cumpla con los más altos estándares de calidad y sea fácilmente escalable y mantenible en el tiempo. Esta guía es el resultado de un esfuerzo colectivo y busca ser una herramienta viva que evolucione con las necesidades del Banco Contactar.
+
+Si tienes sugerencias o encuentras aspectos que pueden mejorar, ¡no dudes en comunicarlo! Este documento está diseñado para adaptarse y mejorar con el tiempo, gracias a las aportaciones de todos los integrantes del equipo.
 
 ## Objetivos
 La presente guía se realizó buscando los siguientes objetivos:
@@ -14,7 +20,8 @@ La presente guía se realizó buscando los siguientes objetivos:
 
 ## Tabla de Contenidos
 
-- [Sincrum - Guia de estilo para el desarrollo en GeneXus](#sincrum---guia-de-estilo-para-el-desarrollo-en-genexus)
+- [Guía de Estilo para el Desarrollo en GeneXus](#guía-de-estilo-para-el-desarrollo-en-genexus)
+  - [¿Por qué una guía de estilo?](#por-qué-una-guía-de-estilo)
   - [Objetivos](#objetivos)
   - [Tabla de Contenidos](#tabla-de-contenidos)
   - [Definición de nombres](#definición-de-nombres)
@@ -29,7 +36,6 @@ La presente guía se realizó buscando los siguientes objetivos:
   - [Buenas prácticas](#buenas-prácticas)
   - [Recursos](#recursos)
   - [Empresas que utilizan esta guia](#empresas-que-utilizan-esta-guia)
-  - [Traducciones](#traducciones)
   - [Licencia](#licencia)
   - [Modificaciones al documento](#modificaciones-al-documento)
 
@@ -766,12 +772,6 @@ La presente guía se realizó buscando los siguientes objetivos:
 
 **[Volver al inicio](#tabla-de-contenidos)**
 
-## Traducciones
-Esta guia de estilo se encuentra también en los siguientes lenguajes:
-
-  - ![us](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/United-States.png) [**English**](README_en.md) by [Laura Aguiar](https://uy.linkedin.com/in/laura-aguiar-396aa56)
-
-**[Volver al inicio](#tabla-de-contenidos)**
 
 ## Licencia
 [![Licencia Creative Commons](https://i.creativecommons.org/l/by-sa/4.0/88x31.png)](http://creativecommons.org/licenses/by-sa/4.0/)
