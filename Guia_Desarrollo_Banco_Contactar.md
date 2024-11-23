@@ -34,10 +34,18 @@ La presente guía se realizó buscando los siguientes objetivos:
   - [Parámetros](#parámetros)
   - [Subrutinas](#subrutinas)
   - [Buenas prácticas](#buenas-prácticas)
+- [11. Nomenclatura para módulos y áreas de desarrollo](#11-nomenclatura-para-módulos-y-áreas-de-desarrollo)
+  - [11.1 Generalidades](#111-generalidades)
+  - [11.2 Prefijos según módulo o área funcional](#112-prefijos-según-módulo-o-área-funcional)
+  - [11.3 Columnas dentro de las tablas](#113-columnas-dentro-de-las-tablas)
+    - [Ejemplos:](#ejemplos)
+  - [11.4 Claves primarias y foráneas](#114-claves-primarias-y-foráneas)
+  - [11.5 Procedimientos almacenados (SP)](#115-procedimientos-almacenados-sp)
+  - [11.6 Ejemplo de estructura para un módulo](#116-ejemplo-de-estructura-para-un-módulo)
+    - [Tablas:](#tablas)
+    - [Procedimientos almacenados:](#procedimientos-almacenados)
   - [Recursos](#recursos)
-  - [Empresas que utilizan esta guia](#empresas-que-utilizan-esta-guia)
   - [Licencia](#licencia)
-  - [Modificaciones al documento](#modificaciones-al-documento)
 
 ## Definición de nombres
 
@@ -748,6 +756,70 @@ La presente guía se realizó buscando los siguientes objetivos:
 	> Siguiendo con la idea anterior, se debe evitar incoporar lógica de negocios en la interfaz.
   El caso más claro en web es generar la exportación a excel y reportes en webpanels. Si en lugar de ello, los encapsulamos en procedimientos, eventualmente los podemos generar desde otras interfaces.
 
+# 11. Nomenclatura para módulos y áreas de desarrollo
+
+Con el objetivo de mantener un diseño ordenado y fácilmente identificable en la base de datos, se utilizará una nomenclatura basada en prefijos que identifiquen el módulo o área funcional del desarrollo.
+
+## 11.1 Generalidades
+
+- Las tablas deben comenzar con un prefijo que identifique el módulo al que pertenecen.
+- Utilizar nombres en singular, descriptivos y en idioma español.
+- Evitar nombres genéricos o ambiguos (como Datos o Registro).
+- Usar **PascalCase** para nombres compuestos.
+- Las tablas relacionadas deben tener prefijos consistentes para mantener la lógica.
+
+## 11.2 Prefijos según módulo o área funcional
+
+Los siguientes prefijos están diseñados para identificar el módulo o área al que pertenece cada tabla:
+
+| Módulo/Área          | Prefijo      | Ejemplo                          |
+|----------------------|-------------|----------------------------------|
+| Nómina               | `Nom_`      | `Nom_Empleado`, `Nom_Pago`       |
+| Clientes             | `Cli_`      | `Cli_Cliente`, `Cli_Direccion`   |
+| Inventarios          | `Inv_`      | `Inv_Producto`, `Inv_Entrada`    |
+| Ventas               | `Ven_`      | `Ven_Factura`, `Ven_Detalle`     |
+| Finanzas             | `Fin_`      | `Fin_Cuenta`, `Fin_Transaccion`  |
+| Recursos Humanos     | `Rrhh_`     | `Rrhh_Empleado`, `Rrhh_Vacacion` |
+| Compras              | `Cmp_`      | `Cmp_Orden`, `Cmp_Proveedor`     |
+| Contabilidad         | `Cnt_`      | `Cnt_Asiento`, `Cnt_Cuenta`      |
+
+## 11.3 Columnas dentro de las tablas
+
+- Seguir el patrón `NombreTabla_DescripcionColumna`.
+
+### Ejemplos:
+- En `Nom_Empleado`:
+  - `EmpleadoId`, `EmpleadoNombre`, `EmpleadoFechaIngreso`.
+- En `Nom_Pago`:
+  - `PagoId`, `PagoFecha`, `PagoMonto`.
+
+## 11.4 Claves primarias y foráneas
+
+- **Claves primarias**: Siempre utilizar `Id` precedido del prefijo de la tabla.
+  - Ejemplo: `EmpleadoId`, `PagoId`.
+- **Claves foráneas**: Nombre de la tabla relacionada seguido de `Id`.
+  - Ejemplo: `PagoEmpleadoId` (Referencia a `Nom_Empleado`).
+
+## 11.5 Procedimientos almacenados (SP)
+
+- Prefijo `Sp_` seguido del módulo y la acción realizada.
+  - Ejemplo:
+    - `Sp_Nom_InsertarEmpleado`
+    - `Sp_Nom_CalcularPago`
+
+## 11.6 Ejemplo de estructura para un módulo
+
+Supongamos que estamos desarrollando un módulo de nómina:
+
+### Tablas:
+- `Nom_Empleado`: Información de empleados.
+- `Nom_Pago`: Información de pagos a empleados.
+- `Nom_Concepto`: Catálogo de conceptos salariales.
+
+### Procedimientos almacenados:
+- `Sp_Nom_GenerarPagos`: Genera los pagos de empleados.
+- `Sp_Nom_ObtenerHistorialPagos`: Recupera el historial de pagos.
+- 
 ## Recursos
 
   - [GeneXus Wiki](http://wiki.genexus.com/) - GeneXus
@@ -757,17 +829,6 @@ La presente guía se realizó buscando los siguientes objetivos:
   - [GeneXus Search](http://search.genexus.com/) - GeneXus
   - [Stackoverflow](https://es.stackoverflow.com/questions/tagged/genexus)
 
-## Empresas que utilizan esta guia
-
-  Esta es una lista de las empresas que están utilizando esta guia de desarrollo. Haganos saber si su empresa utiliza esta guía ([info@sincrum.com](mailto:info@sincrum.com)) o un fork de la misma y lo agregaremos.
-
-- [**Sincrum**](http://sincrum.com)
-- [**Tangocode**](http://tangocode.com)
-- [**GeneXus**](https://www.genexus.com)
-- [**TributApp**](https://www.tributapp.com)
-- [**I+Dev**](http://www.imasdev.com)
-- [**Big Cheese**](https://bigcheese.com.uy)
-- [**Neuronic**](https://neuronic.com.ar/)
 
 
 **[Volver al inicio](#tabla-de-contenidos)**
@@ -778,10 +839,5 @@ La presente guía se realizó buscando los siguientes objetivos:
 
 Esta obra está bajo una Licencia [Creative Commons Atribución-CompartirIgual 4.0 Internacional](http://creativecommons.org/licenses/by-sa/4.0/)
 
-Basado en [la guia de Javascript de AirBNB](http://airbnb.io/javascript/)
 
 **[Volver al inicio](#tabla-de-contenidos)**
-
-## Modificaciones al documento
-
-Recomendamos que ralice un fork de está guía, realice modificaciones y/o cambie las reglas para que se adecuén a su equipo de trabajo ó empresa. A continuación puede agregar modificaciones a la guía de estilos. Esto le permite actualizar periódicamente el docuemnto sin lidiar con problemas de merge.
