@@ -34,16 +34,34 @@ La presente guía se realizó buscando los siguientes objetivos:
   - [Parámetros](#parámetros)
   - [Subrutinas](#subrutinas)
   - [Buenas prácticas](#buenas-prácticas)
-- [11. Nomenclatura para módulos y áreas de desarrollo](#11-nomenclatura-para-módulos-y-áreas-de-desarrollo)
-  - [11.1 Generalidades](#111-generalidades)
-  - [11.2 Prefijos según módulo o área funcional](#112-prefijos-según-módulo-o-área-funcional)
-  - [11.3 Columnas dentro de las tablas](#113-columnas-dentro-de-las-tablas)
-    - [Ejemplos:](#ejemplos)
-  - [11.4 Claves primarias y foráneas](#114-claves-primarias-y-foráneas)
-  - [11.5 Procedimientos almacenados (SP)](#115-procedimientos-almacenados-sp)
-  - [11.6 Ejemplo de estructura para un módulo](#116-ejemplo-de-estructura-para-un-módulo)
-    - [Tablas:](#tablas)
-    - [Procedimientos almacenados:](#procedimientos-almacenados)
+- [Estructura y Nomenclatura de Bases de Datos](#estructura-y-nomenclatura-de-bases-de-datos)
+  - [11. Nomenclatura para Módulos y Áreas de Desarrollo](#11-nomenclatura-para-módulos-y-áreas-de-desarrollo)
+    - [11.1 Generalidades](#111-generalidades)
+    - [11.2 Prefijos según Módulo o Área Funcional](#112-prefijos-según-módulo-o-área-funcional)
+    - [11.3 Columnas dentro de las Tablas](#113-columnas-dentro-de-las-tablas)
+      - [Ejemplos](#ejemplos)
+    - [11.4 Claves Primarias y Foráneas](#114-claves-primarias-y-foráneas)
+    - [11.5 Procedimientos Almacenados (SP)](#115-procedimientos-almacenados-sp)
+  - [1. BD -- PARÁMETROS](#1-bd----parámetros)
+    - [**Contenido típico**](#contenido-típico)
+    - [**Recomendaciones**](#recomendaciones)
+    - [**Ejemplo de Tablas**](#ejemplo-de-tablas)
+  - [2. BD -- ALMACENAMIENTO\_DATOS](#2-bd----almacenamiento_datos)
+    - [**Contenido típico**](#contenido-típico-1)
+    - [**Recomendaciones**](#recomendaciones-1)
+    - [**Ejemplo de Tablas**](#ejemplo-de-tablas-1)
+  - [3. BD -- IMÁGENES](#3-bd----imágenes)
+    - [**Contenido típico**](#contenido-típico-2)
+    - [**Recomendaciones**](#recomendaciones-2)
+    - [**Ejemplo de Tablas**](#ejemplo-de-tablas-2)
+  - [4. BD -- HISTÓRICOS](#4-bd----históricos)
+    - [**Contenido típico**](#contenido-típico-3)
+    - [**Recomendaciones**](#recomendaciones-3)
+    - [**Ejemplo de Tablas**](#ejemplo-de-tablas-3)
+  - [Importancia de la Nomenclatura para Módulos y Áreas de Desarrollo](#importancia-de-la-nomenclatura-para-módulos-y-áreas-de-desarrollo)
+    - [**Tabla de Prefijos para Módulos**](#tabla-de-prefijos-para-módulos)
+    - [**Importancia**](#importancia)
+    - [**Extensiones y Subáreas**](#extensiones-y-subáreas)
   - [Recursos](#recursos)
   - [Licencia](#licencia)
 
@@ -756,11 +774,13 @@ La presente guía se realizó buscando los siguientes objetivos:
 	> Siguiendo con la idea anterior, se debe evitar incoporar lógica de negocios en la interfaz.
   El caso más claro en web es generar la exportación a excel y reportes en webpanels. Si en lugar de ello, los encapsulamos en procedimientos, eventualmente los podemos generar desde otras interfaces.
 
-# 11. Nomenclatura para módulos y áreas de desarrollo
+# Estructura y Nomenclatura de Bases de Datos
+
+## 11. Nomenclatura para Módulos y Áreas de Desarrollo
 
 Con el objetivo de mantener un diseño ordenado y fácilmente identificable en la base de datos, se utilizará una nomenclatura basada en prefijos que identifiquen el módulo o área funcional del desarrollo.
 
-## 11.1 Generalidades
+### 11.1 Generalidades
 
 - Las tablas deben comenzar con un prefijo que identifique el módulo al que pertenecen.
 - Utilizar nombres en singular, descriptivos y en idioma español.
@@ -768,9 +788,129 @@ Con el objetivo de mantener un diseño ordenado y fácilmente identificable en l
 - Usar **PascalCase** para nombres compuestos.
 - Las tablas relacionadas deben tener prefijos consistentes para mantener la lógica.
 
-## 11.2 Prefijos según módulo o área funcional
+### 11.2 Prefijos según Módulo o Área Funcional
 
 Los siguientes prefijos están diseñados para identificar el módulo o área al que pertenece cada tabla:
+
+| Módulo/Área          | Prefijo      | Ejemplo                          |
+|----------------------|-------------|----------------------------------|
+| Parámetros           | `Par_`      | `Par_Configuracion`, `Par_Idiomas` |
+| Almacenamiento Datos | `Dat_`      | `Dat_Cliente`, `Dat_Transaccion`  |
+| Imágenes             | `Img_`      | `Img_Cliente`, `Img_Documento`    |
+| Históricos           | `His_`      | `His_Transaccion`, `His_Cliente` |
+
+### 11.3 Columnas dentro de las Tablas
+
+- Seguir el patrón `NombreTabla_DescripcionColumna`.
+
+#### Ejemplos
+- En `Par_Configuracion`:
+  - `ConfiguracionId`, `ConfiguracionClave`, `ConfiguracionValor`.
+- En `Dat_Cliente`:
+  - `ClienteId`, `ClienteNombre`, `ClienteEmail`.
+
+### 11.4 Claves Primarias y Foráneas
+
+- **Claves Primarias:** Siempre utilizar `Id` precedido del prefijo de la tabla.
+  - Ejemplo: `ConfiguracionId`, `ClienteId`.
+- **Claves Foráneas:** Nombre de la tabla relacionada seguido de `Id`.
+  - Ejemplo: `TransaccionClienteId` (Referencia a `Dat_Cliente`).
+
+### 11.5 Procedimientos Almacenados (SP)
+
+- Prefijo `Sp_` seguido del módulo y la acción realizada.
+  - Ejemplo:
+    - `Sp_Par_CargarParametros`
+    - `Sp_His_GenerarReporte`
+
+---
+
+## 1. BD -- PARÁMETROS
+
+### **Contenido típico**
+- Tablas de parámetros generales (valores clave para las operaciones del sistema).
+- Configuraciones regionales (idiomas, monedas, zonas horarias).
+- Tablas de catálogo (códigos postales, departamentos, provincias, tipos de documento).
+- Información para parametrizar mensajes dinámicos (ejemplo: mensajes SMS o correos electrónicos).
+
+### **Recomendaciones**
+- **Tamaño reducido:** Los parámetros suelen ocupar poco espacio, por lo que esta base de datos debe estar bien optimizada para lectura rápida.
+- **Relaciones externas:** Incluye referencias cruzadas hacia las otras bases de datos cuando corresponda.
+- **Carga inicial y mantenimiento:** Usa un procedimiento en GeneXus para cargar estos parámetros durante el despliegue inicial. Proporciona una interfaz para que los administradores actualicen esta información.
+
+### **Ejemplo de Tablas**
+| Tabla                 | Descripción                                        |
+|-----------------------|----------------------------------------------------|
+| `Par_Configuracion`   | Valores generales del sistema (claves y descripciones). |
+| `Par_Idiomas`         | Idiomas soportados.                                |
+| `Par_SMSPlantillas`   | Plantillas de mensajes de texto.                   |
+
+---
+
+## 2. BD -- ALMACENAMIENTO_DATOS
+
+### **Contenido típico**
+- Tablas relacionadas con las operaciones principales del negocio.
+- Transacciones que ocurren en tiempo real, como operaciones bancarias, movimientos financieros, o datos de clientes.
+
+### **Recomendaciones**
+- **Estructura bien normalizada:** Esto reduce redundancias y asegura la consistencia.
+- **Índices:** Optimiza las consultas frecuentes con índices adecuados.
+- **Optimización para consultas:** Usa buenas prácticas en la construcción de relaciones y queries.
+
+### **Ejemplo de Tablas**
+| Tabla                 | Descripción                                        |
+|-----------------------|----------------------------------------------------|
+| `Dat_Cliente`         | Datos de los clientes del banco.                   |
+| `Dat_Cuenta`          | Información de cuentas bancarias.                 |
+| `Dat_Transaccion`     | Registro de movimientos bancarios.                 |
+
+---
+
+## 3. BD -- IMÁGENES
+
+### **Contenido típico**
+- Fotos de perfil de clientes.
+- Documentos escaneados (identificaciones, contratos, etc.).
+- Archivos adjuntos relacionados con las operaciones.
+
+### **Recomendaciones**
+- **Base de datos no relacional o almacenamiento en blobs:** Considera usar almacenamiento en blobs o una solución como AWS S3 para manejar archivos grandes, mientras en la base solo almacenas las rutas.
+- **Integración con almacenamiento en la nube:** Si se espera gran volumen, evalúa usar soluciones de almacenamiento externo, manteniendo solo los metadatos en esta base.
+- **Control de versiones:** Si un archivo necesita ser actualizado, conserva versiones anteriores para auditorías.
+
+### **Ejemplo de Tablas**
+| Tabla                | Descripción                                        |
+|----------------------|----------------------------------------------------|
+| `Img_Cliente`        | Rutas y metadatos de las fotos de clientes.         |
+| `Img_Documento`      | Escaneos de documentos importantes.                |
+| `Img_Adjuntos`       | Archivos relacionados con operaciones bancarias.   |
+
+---
+
+## 4. BD -- HISTÓRICOS
+
+### **Contenido típico**
+- Datos de transacciones que ya no son activas pero deben conservarse.
+- Copias de seguridad o snapshots periódicos de otras bases.
+- Historial de cambios en configuraciones y parámetros.
+
+### **Recomendaciones**
+- **Particionado por períodos:** Divide los datos en particiones por año o por períodos definidos para mejorar el rendimiento.
+- **Optimización para lectura:** Diseña esta base de datos pensando en consultas frecuentes, no en actualizaciones.
+- **Retención y políticas de limpieza:** Define políticas claras para la retención de datos históricos (ejemplo: 5 años).
+- **Separación de datos sensibles:** Asegúrate de que la información sensible esté protegida y cumpla con normativas locales.
+
+### **Ejemplo de Tablas**
+| Tabla                  | Descripción                                        |
+|------------------------|----------------------------------------------------|
+| `His_Transaccion`      | Registro histórico de todas las transacciones bancarias. |
+| `His_Cliente`          | Cambios en la información de los clientes.         |
+| `His_Cuenta`           | Registro histórico de las cuentas bancarias.       |
+
+## Importancia de la Nomenclatura para Módulos y Áreas de Desarrollo
+
+### **Tabla de Prefijos para Módulos**
 
 | Módulo/Área          | Prefijo      | Ejemplo                          |
 |----------------------|-------------|----------------------------------|
@@ -783,43 +923,40 @@ Los siguientes prefijos están diseñados para identificar el módulo o área al
 | Compras              | `Cmp_`      | `Cmp_Orden`, `Cmp_Proveedor`     |
 | Contabilidad         | `Cnt_`      | `Cnt_Asiento`, `Cnt_Cuenta`      |
 
-## 11.3 Columnas dentro de las tablas
+---
 
-- Seguir el patrón `NombreTabla_DescripcionColumna`.
+### **Importancia**
 
-### Ejemplos:
-- En `Nom_Empleado`:
-  - `EmpleadoId`, `EmpleadoNombre`, `EmpleadoFechaIngreso`.
-- En `Nom_Pago`:
-  - `PagoId`, `PagoFecha`, `PagoMonto`.
+1. **Claridad y Organización**:
+   - Los prefijos facilitan la identificación rápida del módulo o área funcional al que pertenece una tabla, reduciendo el tiempo necesario para entender el diseño de la base de datos.
 
-## 11.4 Claves primarias y foráneas
+2. **Estandarización**:
+   - Al utilizar un formato consistente como `Prefijo_NombreTabla`, se garantiza que todo el equipo de desarrollo siga las mismas reglas, evitando confusiones y redundancias.
 
-- **Claves primarias**: Siempre utilizar `Id` precedido del prefijo de la tabla.
-  - Ejemplo: `EmpleadoId`, `PagoId`.
-- **Claves foráneas**: Nombre de la tabla relacionada seguido de `Id`.
-  - Ejemplo: `PagoEmpleadoId` (Referencia a `Nom_Empleado`).
+3. **Escalabilidad**:
+   - Con el crecimiento del sistema, es más sencillo mantener una estructura clara y lógica que permita identificar rápidamente nuevas tablas y su propósito.
 
-## 11.5 Procedimientos almacenados (SP)
+4. **Facilidad en el Mantenimiento**:
+   - Un esquema bien definido permite que otros desarrolladores (incluso nuevos integrantes del equipo) puedan realizar modificaciones y consultas sin malentendidos.
 
-- Prefijo `Sp_` seguido del módulo y la acción realizada.
-  - Ejemplo:
-    - `Sp_Nom_InsertarEmpleado`
-    - `Sp_Nom_CalcularPago`
+5. **Compatibilidad con Herramientas de Análisis**:
+   - Muchas herramientas de BI y reporting pueden aprovechar la nomenclatura consistente para generar informes y análisis más precisos.
 
-## 11.6 Ejemplo de estructura para un módulo
+---
 
-Supongamos que estamos desarrollando un módulo de nómina:
+### **Extensiones y Subáreas**
 
-### Tablas:
-- `Nom_Empleado`: Información de empleados.
-- `Nom_Pago`: Información de pagos a empleados.
-- `Nom_Concepto`: Catálogo de conceptos salariales.
+Si se identifican áreas adicionales o especificidades dentro de los módulos, se pueden extender los prefijos. Por ejemplo:
 
-### Procedimientos almacenados:
-- `Sp_Nom_GenerarPagos`: Genera los pagos de empleados.
-- `Sp_Nom_ObtenerHistorialPagos`: Recupera el historial de pagos.
-- 
+| Módulo/Área          | Subárea/Tipo       | Prefijo      | Ejemplo                             |
+|----------------------|--------------------|-------------|-------------------------------------|
+| Inventarios          | Productos         | `Inv_Prod_` | `Inv_Prod_Descripcion`, `Inv_Prod_Costo` |
+| Inventarios          | Entradas/Salidas  | `Inv_Mov_`  | `Inv_Mov_Entrada`, `Inv_Mov_Salida` |
+| Finanzas             | Transacciones     | `Fin_Tran_` | `Fin_Tran_Credito`, `Fin_Tran_Debito` |
+| Contabilidad         | Reportes          | `Cnt_Rep_`  | `Cnt_Rep_Balance`, `Cnt_Rep_EstadoResultados` |
+
+---
+
 ## Recursos
 
   - [GeneXus Wiki](http://wiki.genexus.com/) - GeneXus
